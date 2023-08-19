@@ -1,6 +1,35 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const shapeChoice = require('./shapeChoice.js')
+
+const Triangle = require('./lib/triangle.js');
+const Circle = require('./lib/circle.js');
+const Rect = require('./lib/rect.js');
+
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, data, (err) =>
+      err ? console.log(err) : console.log('Success')
+    );
+}
+
+function drawShape(response){
+    
+    switch(response.shape) {
+        case 'Circle':
+        const shapeC = new Circle(response.backgroundColor, response.text, response.textColor);
+        return shapeC.render()
+            break;
+        case 'Triangle':
+        const shapeT = new Triangle(response.backgroundColor, response.text, response.textColor);
+        return shapeT.render()
+            break;
+        case 'Square':
+            const shapeR = new Rect(response.backgroundColor, response.text, response.textColor);
+        return shapeR.render()
+            break;
+        default:
+        return''
+      }
+}
 
 function init() {
     inquirer
@@ -8,7 +37,7 @@ function init() {
         {
             type: 'input',
             message: 'Please choose three letters or less',
-            name: 'Letters',
+            name: 'text',
             validate: (answer) => {
                 if(answer.length >3){
                     return console.log("Please choose up to 3 characters")
@@ -19,16 +48,16 @@ function init() {
         {
             type: 'input',
             message: 'Please choose a text color (either hex, or keyword)',
-            name: 'TextColor',
+            name: 'textColor',
         },
         {
             type: 'input',
             message: 'Please choose a shape color (either hex, or keyword)',
-            name: 'ShapeColor',
+            name: 'backgroundColor',
         },
         {
             type: 'list',
-            name: 'Shape',
+            name: 'shape',
             message: 'Please Choose a Shape',
             choices: ['Circle', 'Triangle', 'Square']
         },
