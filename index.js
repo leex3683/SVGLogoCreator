@@ -52,7 +52,8 @@ function init() {
         name: "text",
         validate: (answer) => {
           if (answer.length > 3) {
-            return console.log("Please choose up to 3 characters");
+            
+            return console.log("\n\r Please choose up to 3 characters");
           }
           return true;
         },
